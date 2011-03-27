@@ -42,7 +42,8 @@ Installation :
 		client_id:' -your client id- ',
 		client_secret:' -your client secret- ',
 		redirect_uri:'http://www.google.com', // Optional - 'oob' by default if not specified
-        response_type:'code' // now only support code
+        response_type:'code', // now only support code
+        scope: ['likes','comments','relationships'] //for example, this is instagram scope
 	 };
 	 Mojo.Controller.stageController.pushScene('oauth',oauthConfig);	
 	

@@ -12,6 +12,7 @@ function OauthAssistant(oauthConfig) {
 	this.response_type = oauthConfig.response_type;
 	if (oauthConfig.accessTokenMethod != undefined) this.accessTokenMethod = oauthConfig.accessTokenMethod;
 	else this.accessTokenMethod = 'GET';
+	this.scope = oauthConfig.scope;
 	this.url = '';
 	this.requested_token = '';
 	this.exchangingToken = false;
@@ -65,8 +66,16 @@ OauthAssistant.prototype.titleChanged = function(event) {
 
 OauthAssistant.prototype.requestGrant = function() {
 	Mojo.Log.info(this.TAG, 'requestGrant');
-
+	
+	var scope = '';
+	for(var now in this.scope) {
+		if(typeof(this.scope[now]) == 'function')continue;
+		if(scope != '') scope = scope + '+';
+		scope = scope + this.scope[now];
+	}
+	
 	var url = this.authorizeUrl + '?client_id=' + this.client_id + '&redirect_uri=' + this.redirect_uri + '&response_type=' + this.response_type;
+	if(scope != '') url = url + '&scope=' + scope;
 	this.controller.get('browser').mojo.openURL(url);
 };
 
