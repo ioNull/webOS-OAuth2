@@ -82,7 +82,7 @@ OauthAssistant.prototype.requestGrant = function() {
 OauthAssistant.prototype.codeToken = function(code) {
 	this.exchangingToken = true;
 	this.url = this.accessTokenUrl;
-	this.code = code;
+	this.code = code.replace(/[^\da-zA-Z]/g, '');
 	this.method = this.accessTokenMethod;
 	var postParams = {
 		client_id: this.client_id,
